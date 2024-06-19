@@ -1,0 +1,55 @@
+﻿@model List<modeloProductos>
+@{
+    ViewData["Title"] = "ListarProd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}﻿
+<div class="card">
+    <div class="card-header">
+        Listar Productos
+    </div>
+    <div class="card-body">
+        <a asp-action="GuardarProd" asp-controller="Acciones" class="btn btn-success"><i class="bi bi-plus-circle"></i> Registrar Producto</a>
+        <hr />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID Prod</th>
+                    <th>Nombre</th>
+                    <th>Precio Compra</th>
+                    <th>Precio Venta</th>
+                    <th>Cantidad</th>
+                    <th>Fecha de Caducidad</th>
+                    <th>ID Provedor</th>
+                    <th>ID Categoria</th>
+                    <th>ID Marca</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.id_prod_mod</td>
+                        <td>@item.nom_prod_mod</td>
+                        <td>@item.precio_compra_prod_mod</td>
+                        <td>@item.precio_venta_prod_mod</td>
+                        <td>@item.cantidad_prod_mod</td>
+                        <td>@item.fecha_caduca_prod_mod</td>
+                        <td>@item.id_proveedor_prod_mod</td>
+                        <td>@item.id_categoria_prod_mod</td>
+                        <td>@item.id_marca_prod_mod</td>
+                        ﻿
+                        <td>
+                            <a asp-action="EditarProd" asp-controller="Acciones" class="btn btn-primary btn-sm" asp-route-IdProd="@item.id_prod_mod "><i class="bi bi-pencil-square"></i> Editar Producto</a>
+                        </td>
+                        <td>
+                            <a asp-action="EliminarProd" asp-controller="Acciones" class="btn btn-danger btn-sm"
+                           asp-route-IdProd="@item.id_prod_mod">
+                                <i class="bi-trash3"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

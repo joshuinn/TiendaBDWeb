@@ -1,0 +1,60 @@
+﻿@model modeloProductos;
+@{
+    ViewData["Title"] = "EditarProd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+﻿
+<div class="card">
+    <div class="card-header">
+        Modificar Producto
+    </div>
+    <div class="card-body">
+        <form asp-action="EditarProd" asp-controller="Acciones" method="post">
+            <input asp-for="id_prod_mod" type="hidden" class="form-control" /> <div class="mb-3">
+                <label class="form-label">ID Producto: </label>
+                <input asp-for="id_prod_mod" type="number" class="form-control"> <span asp-validation-for="id_prod_mod" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nombre del Producto: </label>
+                <input asp-for="nom_prod_mod" cantidad_prodtype="text" class="form-control"> <span asp-validation-for="nom_prod_mod" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    Precio
+                    Compra:
+                </label>
+                <input asp-for="precio_compra_prod_mod" type="number" class="form-control"> <span asp-validation-for="precio_compra_prod_mod" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Precio Venta:</label>
+                <input asp-for="precio_venta_prod_mod" type="number" class="form-control"> <span asp-validation-for="precio_venta_prod_mod" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Cantidad Producto:</label>
+                <input asp-for="cantidad_prod_mod" type="number" class="form-control"> <span asp-validation-for="cantidad_prod_mod" class="text-danger"></span>
+            </div>
+            ﻿
+            <div class="mb-3">
+                <label class="form-label">Fecha de Caducidad: </label>
+                <input asp-for="fecha_caduca_prod_mod" type="date" class="form-control"> <span asp-validation-for="fecha_caduca_prod_mod" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ID Provedor: </label>
+                <input asp-for="id_proveedor_prod_mod" type="number" class="form-control"> <span asp-validation-for="id_proveedor_prod_mod" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ID Categoria:</label>
+                <input asp-for="id_categoria_prod_mod" type="number" class="form-control"> <span asp-validation-for="id_categoria_prod_mod" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ID Marca:</label>
+                <input asp-for="id_marca_prod_mod" type="number" class="form-control"> <span asp-validation-for="id_marca_prod_mod" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Producto</button>
+            <a asp-action="ListarProd" asp-controller="Acciones" class="btn btn-warning">Regresar a la Lista</a>
+        </form>
+    </div>
+</div>
