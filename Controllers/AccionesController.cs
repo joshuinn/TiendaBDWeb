@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
-using Microsoft.Extensions.Logging;
 using TiendaBDWeb.data;
 using TiendaBDWeb.Models;
 
@@ -9,16 +8,11 @@ namespace TiendaBDWeb.Controllers
 {
     public class AccionesController : Controller
     {
-        private readonly ILogger<AccionesController> _logger;
         ProductosDatos proDat = new ProductosDatos();
         public IActionResult ListarProd()
         {
             var ListaPro = proDat.Listar(1, 1);
             return View(ListaPro);
-        }
-        public AccionesController(ILogger<AccionesController> logger)
-        {
-            _logger = logger;
         }
 
 
@@ -31,7 +25,6 @@ namespace TiendaBDWeb.Controllers
         [HttpPost]
         public IActionResult GuardarProd(modeloProductos recProductos)
         {
-            _logger.LogInformation("Información del producto recibida: {@recProductos}", recProductos);
             if (!ModelState.IsValid)
             {
                 TempData["ErrorMessage"] = "Error: Datos del producto no válidos.";
@@ -72,9 +65,9 @@ namespace TiendaBDWeb.Controllers
         }
 
         [HttpGet]
-        public IActionResult EliminarProd(Int32 IdProd)
+        public IActionResult EliminarProd(Int32 datProd)
         {
-            var Producto = proDat.RegresaProducto(IdProd, 2);
+            var Producto = proDat.RegresaProducto(datProd, 2);
             return View(Producto);
         }
         [HttpPost]

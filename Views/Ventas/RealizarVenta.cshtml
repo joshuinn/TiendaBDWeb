@@ -1,0 +1,172 @@
+﻿@model modeloVentaDetalles
+@{
+    ViewData["Title"] = "RealizarVenta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Escoger producto</h1>
+<div class="card">
+    <div class="card-header">
+        Listar Productos
+    </div>
+    <div class="card-body">
+        <div id="listado-productos">
+
+            <div class="d-flex gap-2 align-item-center">
+                <div>
+                    <button onclick="toggleView()" class="btn btn-warning btn-sm" id="finaliza-detalles">Finalizar detalles</button>
+                </div>
+                <p>
+                    Carrito
+                </p>
+                <div class="relative">
+                    <i class="bi bi-cart"></i>
+                    <span class="badge bg-primary text-sm rounded-pill" id="carrito-conteo"></span>
+                </div>
+            </div>
+
+            <hr />
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>ID Prod</th>
+                        <th>Nombre</th>
+                        <th>Precio Compra</th>
+                        <th>Precio Venta</th>
+                        <th>Cantidad</th>
+                        <th>Fecha de Caducidad</th>
+                        <th>ID Provedor</th>
+                        <th>ID Categoria</th>
+                        <th>ID Marca</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Productos)
+                    {
+
+                        <tr>
+                            <td>@item.id_prod_mod</td>
+                            <td>@item.nom_prod_mod</td>
+                            <td>@item.precio_compra_prod_mod</td>
+                            <td>@item.precio_venta_prod_mod</td>
+                            <td>@item.cantidad_prod_mod</td>
+                            <td>@item.fecha_caduca_prod_mod</td>
+                            <td>@item.id_proveedor_prod_mod</td>
+                            <td>@item.id_categoria_prod_mod</td>
+                            <td>@item.id_marca_prod_mod</td>
+                            ﻿
+                            <td>
+                                <button onclick="agregarProducto(@item.id_prod_mod)" class="btn btn-primary btn-sm"><i class="bi bi-plus"></i> Agregar</button>
+                            </td>
+                            <td>
+                                <button onclick="eliminarProducto(@item.id_prod_mod)" class="btn btn-danger btn-sm">
+                                    <i class="bi-trash3"></i> Quitar
+                                </button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="formulario-detalles" hidden>
+            <h2>Total de productos: <span class="fw-bold" id="detalle-total"></span> </h2>
+            <form id="formulario">
+                <div class="mb-3">
+                    <label class="form-label">ID de venta: </label>
+                    <input asp-for="@Model.Venta.IdVta" id="IdVta" type="number" class="form-control"> <span asp-validation-for="@Model.Venta.IdVta" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Fecha de la venta </label>
+                    <input asp-for="@Model.Venta.FecVta" id="FecVta" type="date" class="form-control"> <span asp-validation-for="@Model.Venta.FecVta" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Hora de la venta: </label>
+                    <input asp-for="@Model.Venta.HorVta" id="HorVta" type="text" class="form-control"> <span asp-validation-for="@Model.Venta.HorVta" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ID cliente </label>
+                    <input asp-for="@Model.Venta.ClienteVta" id="ClienteVta" type="number" class="form-control"> <span asp-validation-for="@Model.Venta.ClienteVta" class="text-danger"></span>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ID empleado: </label>
+                    <input asp-for="@Model.Venta.EmpleadoVta" type="text" id="EmpleadoVta" class="form-control"> <span asp-validation-for="@Model.Venta.EmpleadoVta" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar Venta</button>
+            </form>
+            <button onclick="toggleView()" class="btn btn-warning mt-2">Seguir vendiendo</button>
+        </div>
+    </div>
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                console.error(errorMessage);
+            }
+        });
+        let productosId = []
+        function agregarProducto(idProducto) {
+            productosId.push(idProducto)
+            document.getElementById("carrito-conteo").innerText = productosId.length
+        }
+        function eliminarProducto(idProducto) {
+            let index = productosId.indexOf(idProducto)
+            if (index > -1) {
+                productosId.splice(index, 1)
+                document.getElementById("carrito-conteo").innerText = productosId.length
+            }
+        }
+        function toggleView() {
+            let formulario = document.getElementById("formulario-detalles")
+            if (formulario.hasAttribute("hidden") && productosId.length > 0) {
+                document.getElementById("detalle-total").innerText = productosId.length
+                formulario.removeAttribute("hidden")
+                document.getElementById("listado-productos").setAttribute("hidden", true)
+            } else {
+                formulario.setAttribute("hidden", true)
+                document.getElementById("listado-productos").removeAttribute("hidden")
+            }
+        }
+        function finalizarDetalles(e) {
+            e.preventDefault();
+
+            if (productosId.length === 0) {
+                alert("No hay productos en el carrito")
+                return
+            }
+            const fecha = $('#FecVta').val().split(' ')[0];
+            const data = {
+                Venta: {
+                    Idvta: $('#IdVta').val(),
+                    FecVta: $('#FecVta').val(),
+                    ClienteVta: $('#ClienteVta').val(),
+                    HorVta: $('#HorVta').val(),
+                    EmpleadoVta: $('#EmpleadoVta').val(),
+                },
+                ProductosId: productosId
+            }
+            console.log(data)
+            $.ajax({
+                url: "/Ventas/RealizarVenta",
+                type: "POST",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(data),
+                success: function (response) {
+                    console.log(response)
+                    window.location = "/Ventas/ListarVentas"
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            })
+        }
+
+        document.getElementById("formulario").addEventListener("submit", finalizarDetalles)
+    </script>
+}
+

@@ -1,0 +1,33 @@
+﻿@model modeloVentaDetalles;
+@{
+    ViewData["Title"] = "Eliminar venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Eliminar Producto
+    </div>
+    <div class="card-body">
+        <form asp-action="EliminarVenta" asp-controller="Ventas" method="post">
+            <input asp-for="Venta.IdVta" type="hidden" class="form-control" />
+            <input asp-for="Venta.NumProDet" type="hidden" class="form-control" />
+            <div class="alert alert-danger" role="alert">
+                ¿Desea eliminar la ventac con ID: @Html.DisplayTextFor(m => m.Venta.IdVta)?
+            </div>
+            <button type="submit" class="btn btn-danger">Eliminar Producto</button>
+            <a asp-action="ListarVentas" asp-controller="Ventas" class="btn btn-warning">Regresar a las ventas</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                console.error(errorMessage);
+            }
+        });
+    </script>
+}

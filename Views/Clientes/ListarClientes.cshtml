@@ -1,0 +1,63 @@
+﻿@model List<modeloClientes>
+@{
+    ViewData["Title"] = "ListaCLientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Lista de clientes</h1>
+
+<div class="card">
+    <div class="card-header">
+        Listar Productos
+    </div>
+    <div class="card-body">
+        <div>
+            <a asp-action="RegistrarCliente" asp-controller="Clientes" class="btn btn-success"><i class="bi bi-plus-circle"></i> Agregar cliente</a>
+        </div>
+
+        <hr />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID cliente</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Telefono del cliente</th>
+                    <th>Sexo del cliente</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                    <tr>
+                        <td>@item.id_cli</td>
+                        <td>@item.nom_cli</td>
+                        <td>@item.fna_cli</td>
+                        <td>@item.tel_cli</td>
+                        <td>@item.sex_cli</td>
+                        <td>
+                            <a asp-action="EditarCliente" asp-controller="Clientes" class="btn btn-primary btn-sm" 
+                            asp-route-idCliente="@item.id_cli"><i class="bi bi-pencil-square"></i> Editar Cliente</a>
+                        </td>
+                        <td>
+                            <a asp-action="EliminarCliente" asp-controller="Clientes" class="btn btn-danger btn-sm"
+                               asp-route-IdCLiente="@item.id_cli">
+                                <i class="bi-trash3"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section Scripts {
+    <script>
+        // Crear un array de objetos para los productos
+        var clientes = @Html.Raw(Json.Serialize(Model));
+
+        // Imprimir los datos en la consola
+        console.log("Lista de cientes:", clientes);
+    </script>
+}

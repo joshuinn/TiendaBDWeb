@@ -8,7 +8,10 @@
         Listar Productos
     </div>
     <div class="card-body">
-        <a asp-action="GuardarProd" asp-controller="Acciones" class="btn btn-success"><i class="bi bi-plus-circle"></i> Registrar Producto</a>
+        <div>
+            <a asp-action="GuardarProd" asp-controller="Acciones" class="btn btn-success"><i class="bi bi-plus-circle"></i> Registrar Producto</a>
+        </div>
+
         <hr />
         <table class="table table-bordered">
             <thead>
@@ -27,6 +30,7 @@
             <tbody>
                 @foreach (var item in Model)
                 {
+
                     <tr>
                         <td>@item.id_prod_mod</td>
                         <td>@item.nom_prod_mod</td>
@@ -39,11 +43,12 @@
                         <td>@item.id_marca_prod_mod</td>
                         ﻿
                         <td>
-                            <a asp-action="EditarProd" asp-controller="Acciones" class="btn btn-primary btn-sm" asp-route-IdProd="@item.id_prod_mod "><i class="bi bi-pencil-square"></i> Editar Producto</a>
+                            <a asp-action="EditarProd" asp-controller="" class="btn btn-primary btn-sm" 
+                            asp-route-IdProd=" "><i class="bi bi-pencil-square"></i> Editar Producto</a>
                         </td>
                         <td>
                             <a asp-action="EliminarProd" asp-controller="Acciones" class="btn btn-danger btn-sm"
-                           asp-route-IdProd="@item.id_prod_mod">
+                               asp-route-IdProd="">
                                 <i class="bi-trash3"></i> Eliminar
                             </a>
                         </td>
@@ -53,3 +58,13 @@
         </table>
     </div>
 </div>
+@section Scripts {
+    <script>
+        // Crear un array de objetos para los productos
+        var productos = @Html.Raw(Json.Serialize(Model));
+
+        // Imprimir los datos en la consola
+        console.log("Lista de Productos:", productos);
+    </script>
+}
+

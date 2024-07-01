@@ -1,0 +1,51 @@
+﻿@model modeloClientes;
+@{
+    ViewData["Title"] = "EditarCliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Editar cliente</h1>
+
+<div class="card">
+    <div class="card-header">
+        Registrar Producto
+    </div>
+    <div class="card-body">
+        <form asp-action="EditarCliente" asp-controller="Clientes" method="post">
+            <div class="mb-3">
+                <label class="form-label">ID cliente: </label>
+                <input asp-for="id_cli" type="hidden" class="form-control"> <span asp-validation-for="id_cli" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Nombre del cliente </label>
+                <input asp-for="nom_cli" type="text" class="form-control"> <span asp-validation-for="nom_cli" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Fecha de nacimiento: </label>
+                <input asp-for="fna_cli" type="date" class="form-control"> <span asp-validation-for="fna_cli" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Telefono de cliente: </label>
+                <input asp-for="tel_cli" type="text" class="form-control"> <span asp-validation-for="tel_cli" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Sexo del cliente: </label>
+                <input asp-for="sex_cli" type="text" class="form-control"> <span asp-validation-for="sex_cli" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Cliente</button>
+            <a asp-action="ListarClientes" asp-controller="Clientes" class="btn  btn-warning">Regresar a la lista de clientes</a>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                console.error(errorMessage);
+            }
+        });
+    </script>
+}

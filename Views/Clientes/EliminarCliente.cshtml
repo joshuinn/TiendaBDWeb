@@ -1,0 +1,32 @@
+﻿@model modeloClientes;
+@{
+    ViewData["Title"] = "EliminarCliente";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        Eliminar Producto
+    </div>
+    <div class="card-body">
+        <form asp-action="EliminarCliente" asp-controller="Clientes" method="post">
+            <input asp-for="id_cli" type="hidden" class="form-control" />
+            <div class="alert alert-danger" role="alert">
+                ¿Desea dar de baja al cliente: @Html.DisplayTextFor(m => m.nom_cli)?
+            </div>
+            <button type="submit" class="btn btn-danger">Eliminar Producto</button>
+            <a asp-action="ListarClientes" asp-controller="Clientes" class="btn btn-warning">Regresar a la Lista</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                console.error(errorMessage);
+            }
+        });
+    </script>
+}

@@ -1,0 +1,73 @@
+﻿@model List<modeloVentas>
+@{
+    ViewData["Title"] = "ListarVentas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Listado de detalle de ventas</h1>
+
+
+<div class="card">
+    <div class="card-header">
+        Listar Productos
+    </div>
+    <div class="card-body">
+        <div>
+            <a asp-action="RealizarVenta" asp-controller="Ventas" class="btn btn-success"><i class="bi bi-plus-circle"></i> Realizar venta</a>
+        </div>
+
+        <hr />
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>ID venta</th>
+                    <th>Fecha de la venta</th>
+                    <th>Hora de venta</th>
+                    <th>Cliente venta</th>
+                    <th>Empleado </th>
+                    <th>ID detalle del producto</th>
+                    <th>Cantidad vendida</th>
+                    <th>Nombre del product</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tbody>
+                    @foreach (var item in Model)
+                    {
+
+                    <tr>
+                        <td>@item.IdVta</td>
+                        <td>@item.FecVta</td>
+                        <td>@item.HorVta</td>
+                        <td>@item.ClienteVta</td>
+                        <td>@item.EmpleadoVta</td>
+                        <td>@item.NumProDet</td>
+                        <td>@item.CantidadProd</td>
+                        <td>@item.NombreProd</td>
+                        <td>
+                            <a asp-action="EditarVenta" asp-controller="Ventas" class="btn btn-primary btn-sm"
+                               asp-route-idVenta="@item.IdVta" asp-route-idProd="@item.NumProDet" asp-route-idProd="@item.NumProDet"><i class="bi bi-pencil-square"></i> Editar venta</a>
+                        </td>
+                        <td>
+
+                            <a asp-action="EliminarVenta" asp-controller="Ventas" class="btn btn-danger btn-sm"
+                               asp-route-idVenta="@item.IdVta" asp-route-idProd="@item.NumProDet">
+                                <i class="bi-trash3"></i> Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                    }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Crear un array de objetos para los productos
+        var productos = @Html.Raw(Json.Serialize(Model));
+
+        // Imprimir los datos en la consola
+        console.log("Lista de ventas:", productos);
+    </script>
+}

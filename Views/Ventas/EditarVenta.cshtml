@@ -1,0 +1,58 @@
+﻿@model modeloVentas
+@{
+    ViewData["Title"] = "EditarVenta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Editar venta</h1>
+
+
+<div class="card">
+    <div class="card-header">
+        Producto: @Model.NombreProd
+    </div>
+    <div class="card-body">
+        <form asp-action="EditarVenta" asp-controller="Ventas" method="post">
+            <div class="mb-3">
+                <label hidden class="form-label">ID de venta: </label>
+                <input asp-for="@Model.IdVta" id="IdVta" type="hidden" class="form-control"> <span asp-validation-for="@Model.IdVta" class="text-danger"></span>
+                <input asp-for="@Model.NumProDet" id="IdVta" type="hidden" class="form-control"> <span asp-validation-for="@Model.NumProDet" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Fecha de la venta </label>
+                <input asp-for="@Model.FecVta" id="FecVta" type="date" class="form-control"> <span asp-validation-for="@Model.FecVta" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Hora de la venta: </label>
+                <input asp-for="@Model.HorVta" id="HorVta" type="text" class="form-control"> <span asp-validation-for="@Model.HorVta" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ID cliente </label>
+                <input asp-for="@Model.ClienteVta" id="ClienteVta" type="number" class="form-control"> <span asp-validation-for="@Model.ClienteVta" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ID empleado: </label>
+                <input asp-for="@Model.EmpleadoVta" type="text" id="EmpleadoVta" class="form-control"> <span asp-validation-for="@Model.EmpleadoVta" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Cantidad: </label>
+                <input asp-for="@Model.CantidadProd" type="text" id="EmpleadoVta" class="form-control"> <span asp-validation-for="@Model.CantidadProd" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar Venta</button>
+        <button asp-action="ListarVentas" asp-controller="Ventas" class="btn btn-warning mt-2">Regresar a la lista</button>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var errorMessage = '@TempData["ErrorMessage"]';
+            if (errorMessage) {
+                console.error(errorMessage);
+            }
+        });
+    </script>
+}
+

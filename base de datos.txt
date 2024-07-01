@@ -1,0 +1,493 @@
+--BASES DE DATOS
+
+create database TiendaBD
+/*on
+(
+	name = TiendaBD_dat,
+	filename = 'C:\SQLData\MSSQL16.SQLEXPRESS\MSSQL\DATA\TiendaBD.mdf',
+	size = 10MB,
+	maxsize = 50MB,
+	filegrowth = 10MB
+)
+log on
+(
+	name = TiendaBD_log,
+	filename = 'C:\SQLData\MSSQL16.SQLEXPRESS\MSSQL\DATA\TiendaBD.ldf',
+	size = 5MB,
+	maxsize = 25MB,
+	filegrowth = 5MB
+);*/
+
+use TiendaBD;
+
+create table cat_Clientes
+(
+	id_cli smallint primary key,
+	nom_cli varchar(50) not null,
+	tel_cli varchar(10) not null,
+	fna_cli date not null,
+	sex_cli varchar(1) not null,
+);
+
+insert into cat_Clientes values (1,'ROSA HERNANES RAMOS','5556581100','2000-10-21','F');
+insert into cat_Clientes values (2,'ALBERTO TORRES ALAMO','5556581101','2001-11-21','M');
+insert into cat_Clientes values (3,'JUDITH REYES MORA','5556581102','1999-12-18','F');
+insert into cat_Clientes values (4,'ISABEL LEYVA ARANZA','5556581103','2002-02-06','F');
+insert into cat_Clientes values (5,'RICARDO FLORES GARCIA','5556581104','1989-08-15','M');
+insert into cat_Clientes values (6,'NOE GUTIERREZ ANAYA','5556581105','1995-03-21','M');
+insert into cat_Clientes values (7,'FERNANDA MALDONADO GAMA','5556581106','1990-11-12','F');
+
+create table cat_Empleados
+(
+	id_emp smallint primary key,
+	nom_emp varchar(50) not null,
+	tel_emp varchar(10) not null,
+	usr_emp varchar(5) not null,
+	pas_emp smallint not null
+);
+
+insert into cat_Empleados values (1,'JOE MARTINEZ ROJAS','5556581120','USR01',120);
+insert into cat_Empleados values (2,'ALEX RIOS MENDOZA','5556581121','USR02',121);
+insert into cat_Empleados values (3,'JUDITH MARTINEZ RUIZ','5556581122','USR03',122);
+insert into cat_Empleados values (4,'MARIA MOYA SUAREZ','5556581123','USR04',123);
+insert into cat_Empleados values (5,'ALICIA LOPEZ RIOS','5556581124','USR05',124);
+
+create table cat_Proveedores
+(
+	id_prov smallint primary key,
+	nom_prov varchar(50) not null,
+	tel_prov varchar(10) not null,
+	mail_prov varchar(50) not null
+);
+
+insert into cat_Proveedores values (1,'FEMSA','5556581110','femsa@coke.com');
+insert into cat_Proveedores values (2,'PEPSICO','5556581111','distribuyepep@pepsico.com');
+insert into cat_Proveedores values (3,'BIMBO','5556581112','panatumesa@bimbo.com');
+insert into cat_Proveedores values (4,'GRUPO HERDEZ','5556581113','nadiesabemas@herdez.com');
+insert into cat_Proveedores values (5,'GRUPO ALPURA','5556581114','lacteosdist@alpura.com');
+insert into cat_Proveedores values (6,'MARINELA','5556581115','pandemesa@marinela.com');
+insert into cat_Proveedores values (7,'SABRITAS','5556581116','aquenopuedes@sabritas.com');
+insert into cat_Proveedores values (8,'RICOLINO','5556581117','golosinasmar@ricolino.com');
+insert into cat_Proveedores values (9,'GRUPO MODELO','5556581118','modelodist@modelo.com');
+insert into cat_Proveedores values (10,'LACTEOS LALA','5556581119','lacteoslala@lala.com');
+
+create table cat_Categorias
+(
+	id_cat smallint primary key,
+	desc_cat varchar(30) not null
+);
+
+insert into cat_Categorias values (1,'REFRESCOS');
+insert into cat_Categorias values (2,'LACTEOS');
+insert into cat_Categorias values (3,'BEBIDAS ALCOHOLOCAS');
+insert into cat_Categorias values (4,'GOLOSINAS');
+insert into cat_Categorias values (5,'FRITANGAS');
+insert into cat_Categorias values (6,'VERDURAS');
+insert into cat_Categorias values (7,'PANADERIA');
+
+create table cat_Marcas
+(
+	id_mark smallint primary key,
+	desc_mark varchar(30) not null
+);
+
+insert into cat_Marcas values (1,'COCA COLA');
+insert into cat_Marcas values (2,'PEPSI COLA');
+insert into cat_Marcas values (3,'BIMBO');
+insert into cat_Marcas values (4,'ALPURA');
+insert into cat_Marcas values (5,'LALA');
+insert into cat_Marcas values (6,'RICOLINO');
+insert into cat_Marcas values (7,'SABRITAS');
+insert into cat_Marcas values (8,'HERDEZ');
+insert into cat_Marcas values (9,'CORONA');
+insert into cat_Marcas values (10,'HEINEKEN');
+
+create table cat_Productos
+(
+	id_prod smallint primary key,
+	nom_prod varchar(60) not null,
+	precio_compra_prod decimal(7,2) not null,
+	precio_venta_prod decimal(7,2) not null,
+	cantidad_prod smallint not null,
+	fec_cad_prod date not null,
+	id_prove_prod smallint not null,
+	id_cate_prod smallint not null,
+	id_marca_prod smallint not null,
+	constraint "fk_proveedor" foreign key(id_prove_prod) references cat_Proveedores(id_prov),
+	constraint "fk_categorias" foreign key(id_cate_prod) references cat_Categorias(id_cat),
+	constraint "fk_marca" foreign key(id_marca_prod) references cat_Marcas(id_mark)
+);
+
+insert into cat_Productos values (1,'COCA COLA REGULAR 450 ML',15.50,17.50,20,'2024-06-18',1,1,1);
+insert into cat_Productos values (2,'COCA COLA SIN AZUCAR 450 ML',14.00,19.50,15,'2024-11-16',1,1,1);
+insert into cat_Productos values (3,'PAN BIMBO BLANCO GRANDE',25.70,32.50,14,'2025-01-11',3,7,3);
+insert into cat_Productos values (4,'PINGUINOS 3 PIEZAS',19.70,23.80,12,'2023-12-21',6,7,6);
+insert into cat_Productos values (5,'CORONITA 230 ML',12.50,17.02,20,'2024-11-28',9,3,9);
+insert into cat_Productos values (6,'LECHE ALPURA ENTERA 1L',27.65,31.90,10,'2023-12-11',10,2,4);
+insert into cat_Productos values (7,'SABRITONES GRANDES 560G',21.70,27.50,7,'2024-04-18',7,5,7);
+insert into cat_Productos values (8,'MORITA 35G',13.20,17.90,6,'2024-02-15',8,4,6);
+insert into cat_Productos values (9,'YOUGURTH LALA FRESA 75ML',9.74,15.20,11,'2023-12-19',5,2,4);
+insert into cat_Productos values (10,'CHILES JALAPEÑOS LATA 75G',12.30,16.50,15,'2025-02-06',4,6,8);
+
+create table ventas
+(
+	id_vta integer primary key,
+	fec_vta date not null,
+	hor_vta varchar(5) not null,
+	cliente_vta smallint not null,
+	empleado_vta smallint not null,
+	constraint "fk_Cliente" foreign key(cliente_vta) references cat_Clientes(id_cli),
+	constraint "fk_Empleados" foreign key(empleado_vta) references cat_Empleados(id_emp)
+);
+
+insert into ventas values (1,'2023-11-24','13:18',2,3);
+insert into ventas values (2,'2023-11-24','17:25',1,3);
+insert into ventas values (3,'2023-11-24','19:21',3,3);
+insert into ventas values (4,'2023-12-10','09:11',4,2);
+
+create table det_Ventas
+(
+	num_vta_det integer not null,
+	num_pro_det smallint not null,
+	cantidad_prod integer not null,
+	constraint "fk_ventas" foreign key(num_vta_det) references ventas(id_vta),
+	constraint "fk_producto" foreign key(num_pro_det) references cat_Productos(id_prod)
+);
+
+insert into det_Ventas values (1,3,2);
+insert into det_Ventas values (1,2,4);
+insert into det_Ventas values (1,4,5);
+insert into det_Ventas values (1,3,9);
+insert into det_Ventas values (2,2,1);
+insert into det_Ventas values (2,1,5);
+insert into det_Ventas values (2,3,4);
+
+select * from cat_Clientes;
+select * from cat_Empleados;
+select * from cat_Productos;
+select * from cat_Proveedores;
+select * from cat_Marcas;
+select * from cat_Categorias;
+select * from ventas;
+select * from det_Ventas;
+
+--PROCEDIMIENTOS ALMACENADOS
+
+create procedure sp_AdministraProductos(
+@idProd smallint,
+@nomProd varchar(60),
+@precioComProd decimal(7,2),
+@precioVenProd decimal(7,2),
+@cantiProd smallint,
+@fecCadProd date,
+@idProvProd smallint,
+@idCateProd smallint,
+@idMarcProd smallint,
+@tipOper smallint
+)
+as
+Begin
+	if(@tipOper=1)
+				insert into cat_Productos values(@idProd,@nomProd,@precioComProd,@precioVenProd,
+				@cantiProd,@fecCadProd,@idProvProd,@idCateProd,@idMarcProd);
+			else
+				if(@tipOper=2)
+							update cat_Productos set nom_prod = @nomProd, precio_compra_prod=@precioComProd,
+							precio_venta_prod=@precioVenProd,cantidad_prod=@cantiProd,fec_cad_prod=@fecCadProd,
+							id_prove_prod=@idProvProd,id_cate_prod=@idCateProd,id_marca_prod=@idMarcProd
+							where id_prod=@idProd;
+	End;
+
+
+
+create procedure sp_EliminaProd(@idProd smallint)
+as
+begin
+	delete from cat_Productos where id_prod=@idProd;
+end;
+
+
+create procedure sp_ConsultaProductos(@idProd smallint,@tipCon smallint)
+as
+begin
+	if(@tipCon=1)
+		select * from cat_Productos;
+	else
+		select * from cat_Productos where id_prod=@idProd;
+end;
+
+
+
+
+-- Procedimiento para registrar una nueva venta con un solo producto
+alter PROCEDURE sp_RegistrarVenta
+    @id_vta INT,
+    @fec_vta DATE,
+    @hor_vta VARCHAR(5),
+    @cliente_vta SMALLINT,
+    @empleado_vta SMALLINT,
+    @num_pro_det SMALLINT,
+    @cantidad_prod INT
+AS
+BEGIN
+    -- Iniciar una transacción
+    BEGIN TRANSACTION;
+
+    BEGIN TRY
+        -- Insertar la venta en la tabla ventas
+        INSERT INTO ventas (id_vta, fec_vta, hor_vta, cliente_vta, empleado_vta)
+        VALUES (@id_vta, @fec_vta, @hor_vta, @cliente_vta, @empleado_vta);
+
+        -- Insertar el detalle de la venta
+        INSERT INTO det_Ventas (num_vta_det, num_pro_det, cantidad_prod)
+        VALUES (@id_vta, @num_pro_det, @cantidad_prod);
+
+        -- Actualizar la cantidad del producto en la tabla cat_Productos
+        UPDATE cat_Productos
+        SET cantidad_prod = cantidad_prod - @cantidad_prod
+        WHERE id_prod = @num_pro_det;
+
+        -- Confirmar la transacción
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        ROLLBACK TRANSACTION;
+        -- Lanzar el error
+        THROW;
+    END CATCH
+END;
+
+
+
+--ejemplo
+EXEC sp_RegistrarVenta 
+    @id_vta = 6, 
+    @fec_vta = '2024-06-19', 
+    @hor_vta = '14:30', 
+    @cliente_vta = 1, 
+    @empleado_vta = 2, 
+    @num_pro_det = 1, 
+    @cantidad_prod = 2;
+
+	CREATE PROCEDURE sp_VerTodasLasVentas	
+AS
+BEGIN
+    -- Seleccionar todas las ventas y sus detalles
+    SELECT 
+        v.id_vta,
+        v.fec_vta,
+        v.hor_vta,
+        v.cliente_vta,
+        v.empleado_vta,
+        dv.num_pro_det,
+        dv.cantidad_prod,
+        p.nom_prod
+    FROM 
+        ventas v
+    INNER JOIN 
+        det_Ventas dv ON v.id_vta = dv.num_vta_det
+    INNER JOIN 
+        cat_Productos p ON dv.num_pro_det = p.id_prod
+    ORDER BY 
+        v.id_vta;
+END;
+
+EXEC sp_VerTodasLasVentas;
+
+create procedure sp_EliminarCliente
+@id_cli int
+as begin
+
+delete from cat_Clientes where id_cli = @id_cli
+
+end	
+
+create procedure sp_VerCliente
+@id_cli int
+as begin
+
+select * from cat_Clientes where id_cli = @id_cli
+end
+
+
+alter procedure sp_InsertarCliente 
+	@id_cli int,
+	@nom_cli varchar(50),
+	@tel_cli varchar(10),
+	@fna_cli date,
+	@sex_cli varchar(1)
+as begin
+	set nocount on;
+	insert into cat_Clientes values(@id_cli, @nom_cli, @tel_cli, @fna_cli, @sex_cli);
+end
+
+CREATE PROCEDURE sp_EditarCliente
+    @id_cli int,
+	@nom_cli varchar(50),
+	@tel_cli varchar(10),
+	@fna_cli date,
+	@sex_cli varchar(1)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Verificar si el cliente existe
+    IF NOT EXISTS (SELECT 1 FROM cat_Clientes where id_cli = @id_cli)
+    BEGIN
+        RAISERROR('El cliente especificado no existe.', 16, 1);
+        RETURN;
+    END
+
+    -- Actualizar la información del cliente
+    update cat_Clientes
+    SET id_cli = @id_cli,
+        nom_cli = @nom_cli,
+		tel_cli = @tel_cli,
+		sex_cli = @sex_cli
+    WHERE id_cli = @id_cli;
+
+    PRINT 'Información del cliente actualizada correctamente.';
+END
+
+
+
+
+-- Trigger para verificar existencia de productos antes de insertar una venta
+CREATE TRIGGER trg_VerificarProductosSuficientes
+ON det_Ventas
+FOR INSERT
+AS
+BEGIN
+    DECLARE @id_prod INT;
+    DECLARE @cantidad_nueva INT;
+    DECLARE @cantidad_existente INT;
+
+    SELECT @id_prod = i.num_pro_det, @cantidad_nueva = i.cantidad_prod
+    FROM inserted i;
+
+    SELECT @cantidad_existente = cantidad_prod
+    FROM cat_Productos
+    WHERE id_prod = @id_prod;
+
+    IF @cantidad_existente < @cantidad_nueva
+    BEGIN
+        RAISERROR('Productos insuficientes', 16, 1);
+        ROLLBACK TRANSACTION;
+    END
+END;
+
+
+
+alter PROCEDURE sp_realizarVenta
+    @id_vta INT,
+    @fec_vta DATE,
+    @hor_vta VARCHAR(5),
+    @cli_vta SMALLINT,
+    @Empleado_vta SMALLINT,
+    @CantidadProd INT,
+    @id_prod INT
+AS
+BEGIN
+    -- Verificar si la venta ya existe en la tabla ventas
+    IF EXISTS (SELECT 1 FROM ventas WHERE id_vta = @id_vta)
+    BEGIN
+        -- Insertar el detalle de la venta en la tabla det_Ventas
+        INSERT INTO det_Ventas (num_vta_det, num_pro_det, cantidad_prod)
+        VALUES (@id_vta, @id_prod, @CantidadProd);
+
+        -- Actualizar la cantidad del producto en la tabla cat_Productos
+        UPDATE cat_Productos
+        SET cantidad_prod = cantidad_prod - @CantidadProd
+        WHERE id_prod = @id_prod;
+    END
+    ELSE
+    BEGIN
+        -- Iniciar una transacción
+        BEGIN TRANSACTION;
+
+        BEGIN TRY
+            -- Insertar la venta en la tabla ventas
+            INSERT INTO ventas (id_vta, fec_vta, hor_vta, cliente_vta, empleado_vta)
+            VALUES (@id_vta, @fec_vta, @hor_vta, @cli_vta, @Empleado_vta);
+
+            -- Insertar el detalle de la venta en la tabla det_Ventas
+            INSERT INTO det_Ventas (num_vta_det, num_pro_det, cantidad_prod)
+            VALUES (@id_vta, @id_prod, @CantidadProd);
+
+            -- Actualizar la cantidad del producto en la tabla cat_Productos
+            UPDATE cat_Productos
+            SET cantidad_prod = cantidad_prod - @CantidadProd
+            WHERE id_prod = @id_prod;
+
+            -- Confirmar la transacción
+            COMMIT TRANSACTION;
+        END TRY
+        BEGIN CATCH
+            -- En caso de error, deshacer la transacción
+            ROLLBACK TRANSACTION;
+            -- Lanzar el error	
+            THROW;
+        END CATCH
+    END
+END;
+
+
+
+
+ALTER PROCEDURE sp_EliminarVenta
+    @IdVta INT,
+	@numProd INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+		delete from det_Ventas where num_vta_det = @IdVta and num_pro_det= @numProd
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        THROW;
+    END CATCH
+END
+
+ALTER PROCEDURE EditarDetalleVenta
+    @idVta INT,
+    @numProd INT,
+    @nuevaFecha DATE,
+    @nuevaHora VARCHAR(5),
+    @nuevoCliente INT,
+    @nuevoEmpleado INT,
+    @nuevaCantidad INT
+AS
+BEGIN
+    -- Actualizar los datos de la venta en la tabla 'ventas'
+    UPDATE ventas
+    SET fec_vta = @nuevaFecha,
+        hor_vta = @nuevaHora,
+        cliente_vta = @nuevoCliente,
+        empleado_vta = @nuevoEmpleado
+    WHERE id_vta = @idVta;
+
+    -- Calcular la diferencia de la nueva cantidad con la cantidad actual en 'det_Ventas'
+    DECLARE @diferencia INT;
+    SELECT @diferencia = @nuevaCantidad - cantidad_prod
+    FROM det_Ventas
+    WHERE num_vta_det = @idVta AND num_pro_det = @numProd;
+
+    -- Actualizar la cantidad del producto en 'productos' según la diferencia calculada
+    UPDATE cat_Productos
+    SET cantidad_prod = cantidad_prod + @diferencia
+    WHERE id_prod = @numProd;
+
+    -- Actualizar la cantidad del producto en 'det_Ventas'
+    UPDATE det_Ventas 
+    SET cantidad_prod = @nuevaCantidad
+    WHERE num_vta_det = @idVta AND num_pro_det = @numProd;
+END

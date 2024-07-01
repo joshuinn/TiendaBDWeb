@@ -48,18 +48,7 @@
                 <input asp-for="id_marca_prod_mod" type="number" class="form-control"> <span asp-validation-for="id_marca_prod_mod" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Guardar Producto</button>
-            <a asp-action="ListarProd" asp-controller="Acciones" class="bt  n btn-warning">Regresar a la Lista</a>
+            <a asp-action="ListarProd" asp-controller="Acciones" class="btn  btn-warning">Regresar a la Lista</a>
         </form>
     </div>
 </div>
-
-@section Scripts{
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var errorMessage = '@TempData["ErrorMessage"]';
-        if (errorMessage) {
-            console.error(errorMessage);
-        }
-    });
-</script>
-}

@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using System.Reflection.Metadata.Ecma335;
 
 namespace TiendaBDWeb.data
 
@@ -34,6 +35,8 @@ namespace TiendaBDWeb.data
                             fecha_caduca_prod_mod = Convert.ToDateTime(LectorDatos["fec_cad_prod"]),
                             id_proveedor_prod_mod = Convert.ToInt32(LectorDatos["id_prove_prod"]),
                             id_categoria_prod_mod = Convert.ToInt32(LectorDatos["id_cate_prod"]),
+                            id_marca_prod_mod = Convert.ToInt32(LectorDatos["id_marca_prod"]),
+                            precio_venta_prod_mod = Convert.ToDecimal(LectorDatos["precio_venta_prod"])
                         });
 
                     }
